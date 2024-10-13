@@ -1,21 +1,4 @@
-
-
-// Переменные объекта фотографии
-const minPhoto = 1;
-const maxPhoto = 25;
-
-// Генерируем массив фото id
-
-// Генерируем массив фото url
-
-// Генерируем массив фото description
-
-// Генерируем массив фото likes
-const minLikes = 15;
-const maxLikes = 200;
-
-// Генерируем массив объектов фото comments
-
+//Создаем массив сообщений в комментарии
 const MESSAGES = [
   'Всё отлично!',
   ' В целом всё неплохо. Но не всё.',
@@ -25,6 +8,7 @@ const MESSAGES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
+//создаем массив имен в комментарии
 const NAMES = [
   'Дарья',
   'Петя',
@@ -53,6 +37,27 @@ const NAMES = [
   'Лена',
 ];
 
+// Создаем массив id комметнария
+const commentsIdMin = 1;
+const commentsIdMax = 750;
+const COMMENTSIDARREY = Array.from({ length: commentsIdMax }, (_, i) => i + 1);
+
+//Создаем переменные мин и макс значений фото аватара
+const avatarMin = 1;
+const avatarMax = 6;
+
+// Создаем переменные мин и макс значений likes
+const minLikes = 15;
+const maxLikes = 200;
+
+// Создаем переменные мин и макс значений комментариев под фото
+const minComments = 0;
+const maxComents = 30;
+
+// Создаем переменную макс значения кол-ва фотографий
+const maxPhoto = 25;
+
+// Создаем функцию получения любого случайного числа от мин и макс значений
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -60,38 +65,41 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-// function getRandomInt(max) {
-//   return Math.floor(Math.random() * max);
-// }
-
-// Генерируем объект comments
-// Генерируем массив comments id
-// Генерируем массив comments avatar
-
+// Создаем объект комментарий
 const createComments = () => {
   const randomNameIndex = getRandomInteger(0, NAMES.length - 1);
   const randomMessageIndex = getRandomInteger(0, MESSAGES.length - 1);
-  const randomAvatarInteger = getRandomInteger(1, 6);
+  const randomAvatarInteger = getRandomInteger(avatarMin, avatarMax);
+  const commentsIdInteger = getRandomInteger(commentsIdMin, COMMENTSIDARREY.length - 1)
 
   return {
-    commentsId: '',
+    commentsId: commentsIdInteger,
     commentsAvatar: 'img/avatar-' + randomAvatarInteger + '.svg',
     commentsMessage: MESSAGES[randomMessageIndex],
-    commentsName: NAMES[randomNameIndex]
+    commentsName: NAMES[randomNameIndex],
   };
 };
-
 
 // Создаем объект фотографию
 const createPhoto = () => {
-  return {
-    photoId: '',
-    photoUrl: '',
-    photoDescription: '',
-    photoLikes: '',
-    photoComments: '',
+  let photoId = 1;
+
+  return () => {
+    const photo = {};
+    const commentsQuantity = getRandomInteger(minComments, maxComents);
+    const likesQuantity = getRandomInteger(minLikes, maxLikes);
+
+    photo.id = photoId;
+    photo.url = 'photos/' + photoId + '.jpg';
+    photo.description = 'Мое фото ' + photoId;
+    photo.likes = likesQuantity;
+    photo.comments = Array.from({ length: commentsQuantity }, createComments);
+    photoId++;
+    return photo;
   };
 };
 
+//Создаем массив фотографий
+const photoArray = Array.from({ length: maxPhoto }, createPhoto());
 
-//создаем массив из 25 сгенерированных объектов - фотографий
+console.log(photoArray);
