@@ -38,24 +38,27 @@ const NAMES = [
 ];
 
 // Создаем массив id комметнария
-const commentsIdMin = 1;
-const commentsIdMax = 750;
-const COMMENTSIDARREY = Array.from({ length: commentsIdMax }, (_, i) => i + 1);
+const COMMENTS_ID_MIN = 1;
+const COMMENTS_ID_MAX = 750;
+const COMMENTS_ID_ARREY = Array.from(
+  { length: COMMENTS_ID_MAX },
+  (_, i) => i + 1
+);
 
 //Создаем переменные мин и макс значений фото аватара
-const avatarMin = 1;
-const avatarMax = 6;
+const AVATAR_MIN = 1;
+const AVATAR_MAX = 6;
 
 // Создаем переменные мин и макс значений likes
-const minLikes = 15;
-const maxLikes = 200;
+const MIN_LIKES = 15;
+const MAX_LIKES = 200;
 
 // Создаем переменные мин и макс значений комментариев под фото
-const minComments = 0;
-const maxComents = 30;
+const MIN_COMMENTS = 0;
+const MAX_COMMENTS = 30;
 
 // Создаем переменную макс значения кол-ва фотографий
-const maxPhoto = 25;
+const MAX_PHOTO = 25;
 
 // Создаем функцию получения любого случайного числа от мин и макс значений
 const getRandomInteger = (a, b) => {
@@ -69,8 +72,12 @@ const getRandomInteger = (a, b) => {
 const createComments = () => {
   const randomNameIndex = getRandomInteger(0, NAMES.length - 1);
   const randomMessageIndex = getRandomInteger(0, MESSAGES.length - 1);
-  const randomAvatarInteger = getRandomInteger(avatarMin, avatarMax);
-  const commentsIdInteger = getRandomInteger(commentsIdMin, COMMENTSIDARREY.length - 1);
+  const randomAvatarInteger = getRandomInteger(AVATAR_MIN, AVATAR_MAX);
+  // создаем уникальный id комментария без повторений
+  const commentsIdInteger = getRandomInteger(
+    COMMENTS_ID_MIN,
+    COMMENTS_ID_ARREY.length - 1
+  );
 
   return {
     commentsId: commentsIdInteger,
@@ -80,26 +87,18 @@ const createComments = () => {
   };
 };
 
+// создаем уникальный id фото по порядку от 1 до 25
+
 // Создаем объект фотографию
-const createPhoto = () => {
-  let photoId = 1;
-
-  return () => {
-    const photo = {};
-    const commentsQuantity = getRandomInteger(minComments, maxComents);
-    const likesQuantity = getRandomInteger(minLikes, maxLikes);
-
-    photo.id = photoId;
-    photo.url = 'photos/' + photoId + '.jpg';
-    photo.description = 'Мое фото ' + photoId;
-    photo.likes = likesQuantity;
-    photo.comments = Array.from({ length: commentsQuantity }, createComments);
-    photoId++;
-    return photo;
-  };
-};
+const createPhoto = () => ({
+  photoId: '',
+  photoUrl: 'photos/ .jpg',
+  photoDescription: 'Мое фото',
+  photoLikes: getRandomInteger(MIN_LIKES, MAX_LIKES),
+  photoComments: Array.from({ length: getRandomInteger(MIN_COMMENTS, MAX_COMMENTS) }, createComments),
+});
 
 //Создаем массив фотографий
-const photoArray = Array.from({ length: maxPhoto }, createPhoto());
+const photoArray = Array.from({ length: MAX_PHOTO }, createPhoto);
 
 console.log(photoArray);
