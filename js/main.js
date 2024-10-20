@@ -40,10 +40,6 @@ const NAMES = [
 // Создаем массив id комметнария
 const COMMENTS_ID_MIN = 1;
 const COMMENTS_ID_MAX = 750;
-const COMMENTS_ID_ARREY = Array.from(
-  { length: COMMENTS_ID_MAX },
-  (_, i) => i + 1
-);
 
 //Создаем переменные мин и макс значений фото аватара
 const AVATAR_MIN = 1;
@@ -74,28 +70,55 @@ const createComments = () => {
   const randomMessageIndex = getRandomInteger(0, MESSAGES.length - 1);
   const randomAvatarInteger = getRandomInteger(AVATAR_MIN, AVATAR_MAX);
   // создаем уникальный id комментария без повторений
-  const commentsIdInteger = getRandomInteger(
+  function createRandomIdFromRangeGenerator(min, max) {
+    const previousValues = [];
+    return function () {
+      let currentValue = getRandomInteger(min, max);
+      while (previousValues.includes(currentValue)) {
+        currentValue = getRandomInteger(min, max);
+      }
+      previousValues.push(currentValue);
+      return currentValue;
+    };
+  }
+  const generateCommentId = createRandomIdFromRangeGenerator(
     COMMENTS_ID_MIN,
-    COMMENTS_ID_ARREY.length - 1
+    COMMENTS_ID_MAX
   );
-
   return {
-    commentsId: commentsIdInteger,
-    commentsAvatar: 'img/avatar-' + randomAvatarInteger + '.svg',
+    commentsId: generateCommentId(),
+    commentsAvatar: `img/avatar-${randomAvatarInteger}.svg`,
     commentsMessage: MESSAGES[randomMessageIndex],
     commentsName: NAMES[randomNameIndex],
   };
 };
 
+//содаем генератор уникального id
+function createIdGenerator() {
+  let lastGeneratedId = 0;
+
+  return function () {
+    lastGeneratedId += 1;
+    return lastGeneratedId;
+  };
+}
 // создаем уникальный id фото по порядку от 1 до 25
+const generatePhotoId = createIdGenerator();
+// создаем уникальный порядковый номер url фото по порядку от 1 до 25
+const generateUrlId = createIdGenerator();
+// создаем уникальный орядковый номер description фото по порядку от 1 до 25
+const generateDescriptionId = createIdGenerator();
 
 // Создаем объект фотографию
 const createPhoto = () => ({
-  photoId: '',
-  photoUrl: 'photos/ .jpg',
-  photoDescription: 'Мое фото',
+  photoId: generatePhotoId(),
+  photoUrl: `photos/${generateUrlId()}.jpg`,
+  photoDescription: `Мое фото ${generateDescriptionId()}`,
   photoLikes: getRandomInteger(MIN_LIKES, MAX_LIKES),
-  photoComments: Array.from({ length: getRandomInteger(MIN_COMMENTS, MAX_COMMENTS) }, createComments),
+  photoComments: Array.from(
+    { length: getRandomInteger(MIN_COMMENTS, MAX_COMMENTS) },
+    createComments
+  ),
 });
 
 //Создаем массив фотографий
