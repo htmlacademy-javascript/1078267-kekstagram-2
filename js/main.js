@@ -64,27 +64,28 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
+// создаем уникальный id комментария без повторений
+function createRandomIdFromRangeGenerator(min, max) {
+  const previousValues = [];
+  return function () {
+    let currentValue = getRandomInteger(min, max);
+    while (previousValues.includes(currentValue)) {
+      currentValue = getRandomInteger(min, max);
+    }
+    previousValues.push(currentValue);
+    return currentValue;
+  };
+}
+const generateCommentId = createRandomIdFromRangeGenerator(
+  COMMENTS_ID_MIN,
+  COMMENTS_ID_MAX
+);
+
 // Создаем объект комментарий
 const createComments = () => {
   const randomNameIndex = getRandomInteger(0, NAMES.length - 1);
   const randomMessageIndex = getRandomInteger(0, MESSAGES.length - 1);
   const randomAvatarInteger = getRandomInteger(AVATAR_MIN, AVATAR_MAX);
-  // создаем уникальный id комментария без повторений
-  function createRandomIdFromRangeGenerator(min, max) {
-    const previousValues = [];
-    return function () {
-      let currentValue = getRandomInteger(min, max);
-      while (previousValues.includes(currentValue)) {
-        currentValue = getRandomInteger(min, max);
-      }
-      previousValues.push(currentValue);
-      return currentValue;
-    };
-  }
-  const generateCommentId = createRandomIdFromRangeGenerator(
-    COMMENTS_ID_MIN,
-    COMMENTS_ID_MAX
-  );
   return {
     commentsId: generateCommentId(),
     commentsAvatar: `img/avatar-${randomAvatarInteger}.svg`,
@@ -111,11 +112,11 @@ const generateDescriptionId = createIdGenerator();
 
 // Создаем объект фотографию
 const createPhoto = () => ({
-  photoId: generatePhotoId(),
-  photoUrl: `photos/${generateUrlId()}.jpg`,
-  photoDescription: `Мое фото ${generateDescriptionId()}`,
-  photoLikes: getRandomInteger(MIN_LIKES, MAX_LIKES),
-  photoComments: Array.from(
+  id: generatePhotoId(),
+  url: `photos/${generateUrlId()}.jpg`,
+  description: `Мое фото ${generateDescriptionId()}`,
+  likes: getRandomInteger(MIN_LIKES, MAX_LIKES),
+  comments: Array.from(
     { length: getRandomInteger(MIN_COMMENTS, MAX_COMMENTS) },
     createComments
   ),
