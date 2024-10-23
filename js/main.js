@@ -69,7 +69,7 @@ function createRandomIdFromRangeGenerator(min, max) {
   const previousValues = [];
   return function () {
     let currentValue = getRandomInteger(min, max);
-    if (previousValues.length >= (max - min + 1)) {
+    if (previousValues.length >= max - min + 1) {
       // console.error(`Перебраны все числа из диапазона от ${min} до ${max}`);
       return null;
     }
@@ -80,23 +80,23 @@ function createRandomIdFromRangeGenerator(min, max) {
     return currentValue;
   };
 }
+
 const generateCommentId = createRandomIdFromRangeGenerator(
   COMMENTS_ID_MIN,
   COMMENTS_ID_MAX
 );
 
+//создаем функцию получения случайного значения из массива
+const getRandomArrayElement = (elements) =>
+  elements[getRandomInteger(0, elements.length - 1)];
+
 // Создаем объект комментарий
-const createComments = () => {
-  const randomNameIndex = getRandomInteger(0, NAMES.length - 1);
-  const randomMessageIndex = getRandomInteger(0, MESSAGES.length - 1);
-  const randomAvatarInteger = getRandomInteger(AVATAR_MIN, AVATAR_MAX);
-  return {
-    id: generateCommentId(),
-    avatar: `img/avatar-${randomAvatarInteger}.svg`,
-    message: MESSAGES[randomMessageIndex],
-    name: NAMES[randomNameIndex],
-  };
-};
+const createComments = () => ({
+  id: generateCommentId(),
+  avatar: `img/avatar-${getRandomInteger(AVATAR_MIN, AVATAR_MAX)}.svg`,
+  message: getRandomArrayElement(MESSAGES),
+  name: getRandomArrayElement(NAMES),
+});
 
 //содаем генератор уникального id
 function createIdGenerator() {
@@ -107,10 +107,13 @@ function createIdGenerator() {
     return lastGeneratedId;
   };
 }
+
 // создаем уникальный id фото по порядку от 1 до 25
 const generatePhotoId = createIdGenerator();
+
 // создаем уникальный порядковый номер url фото по порядку от 1 до 25
 const generateUrlId = createIdGenerator();
+
 // создаем уникальный орядковый номер description фото по порядку от 1 до 25
 const generateDescriptionId = createIdGenerator();
 
