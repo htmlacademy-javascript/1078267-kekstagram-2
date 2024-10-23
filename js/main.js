@@ -91,10 +91,10 @@ const createComments = () => {
   const randomMessageIndex = getRandomInteger(0, MESSAGES.length - 1);
   const randomAvatarInteger = getRandomInteger(AVATAR_MIN, AVATAR_MAX);
   return {
-    commentsId: generateCommentId(),
-    commentsAvatar: `img/avatar-${randomAvatarInteger}.svg`,
-    commentsMessage: MESSAGES[randomMessageIndex],
-    commentsName: NAMES[randomNameIndex],
+    id: generateCommentId(),
+    avatar: `img/avatar-${randomAvatarInteger}.svg`,
+    message: MESSAGES[randomMessageIndex],
+    name: NAMES[randomNameIndex],
   };
 };
 
