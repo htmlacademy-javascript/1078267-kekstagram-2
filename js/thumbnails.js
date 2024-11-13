@@ -1,5 +1,4 @@
-import { MOCKED_PHOTOS } from './examples.js';
-import {findTemplate, createFragment} from './utils.js';
+import {findTemplate} from './utils.js';
 
 const template = findTemplate('picture');
 const container = document.querySelector('.pictures');
@@ -21,6 +20,6 @@ const ctrateThumbnail = (photo) => {
 };
 
 
-createFragment(MOCKED_PHOTOS, ctrateThumbnail, container);
+const renderThumbnail = (photos) => container.append(...photos.map(ctrateThumbnail));
 
-
+export {renderThumbnail};
