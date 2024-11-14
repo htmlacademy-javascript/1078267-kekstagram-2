@@ -39,7 +39,7 @@ const findTemplate = (id) => {
     throw new Error(`Элемент не шаблон: ${id}`);
   }
 
-  return template.content.firstElementchild;
+  return template.content.firstElementChild;
 };
 
 /**

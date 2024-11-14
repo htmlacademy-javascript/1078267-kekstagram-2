@@ -6,19 +6,19 @@ const container = document.querySelector('.pictures');
 const ctrateThumbnail = (photo) => {
   /** @type {HTMLElement}*/
   const thumbnail = template.cloneNode(true);
-  thumbnail.href = photo.url;
-  thumbnail.dataset.id = photo.id;
+  const {id, url, likes, comments, description} = photo;
+  thumbnail.href = url;
+  thumbnail.dataset.id = id;
 
   const image = thumbnail.querySelector('.picture__img');
-  image.src = photo.url;
-  image.alt = photo.description;
+  image.src = url;
+  image.alt = description;
 
-  thumbnail.querySelector('.picture__comments').textContent = photo.comments.length;
-  thumbnail.querySelector('.picture__likes').textContent = photo.likes;
+  thumbnail.querySelector('.picture__comments').textContent = comments.length;
+  thumbnail.querySelector('.picture__likes').textContent = likes;
 
   return thumbnail;
 };
-
 
 const renderThumbnail = (photos) => container.append(...photos.map(ctrateThumbnail));
 
