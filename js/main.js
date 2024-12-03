@@ -3,10 +3,10 @@ import { renderThumbnail} from './thumbnails.js';
 import { openBigPicture} from './big-photos.js';
 renderThumbnail(MOCKED_PHOTOS);
 
-ctrateThumbnail(MOCKED_PHOTOS).addEventListener('click', (evt) => {
+document.querySelector('.pictures').addEventListener('click', (evt) => {
   const currentPicture = evt.target.closest('.picture');
 
   if (currentPicture) {
-    openBigPicture(openBigPicture.dataset.pictureID);
+    openBigPicture(currentPicture.dataset.pictureId);
   }
 });

@@ -7,7 +7,6 @@ const ctrateThumbnail = (photo) => {
   /** @type {HTMLElement}*/
   const thumbnail = template.cloneNode(true);
   const {id, url, likes, comments, description} = photo;
-  thumbnail.href = url;
   thumbnail.dataset.id = id;
 
   const image = thumbnail.querySelector('.picture__img');
