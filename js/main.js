@@ -1,9 +1,7 @@
-import { MOCKED_PHOTOS} from './examples.js';
-import { renderThumbnail} from './thumbnails.js';
+import { pictures} from './thumbnails.js';
 import { openBigPicture} from './big-photos.js';
-renderThumbnail(MOCKED_PHOTOS);
 
-document.querySelector('.pictures').addEventListener('click', (evt) => {
+pictures.addEventListener('click', (evt) => {
   const currentPicture = evt.target.closest('.picture');
 
   if (currentPicture) {

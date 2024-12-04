@@ -29,38 +29,10 @@ const createIdGenerator = () => {
   };
 };
 
-const findTemplate = (id) => {
-  const template = document.getElementById(id);
-
-  if (!template) {
-    throw new Error(`Шаблон не найден: ${id}`);
-  }
-  if (!(template instanceof HTMLTemplateElement)) {
-    throw new Error(`Элемент не шаблон: ${id}`);
-  }
-
-  return template.content.firstElementChild;
-};
-
-/**
- * @template Item
- * @param {Item[]} items
- * @param {(item: Item) => HTMLElement} makeElement
- * @param {HTMLElement} container
- */
-
-const createFragment = (items, makeElement, container) => {
-  const fragment = document.createDocumentFragment();
-  items.forEach((item) => fragment.appendChild(makeElement(item)));
-  container.appendChild(fragment);
-};
-
 export {
   getRandomInteger,
   createRandomIdFromRangeGenerator,
   createIdGenerator,
-  findTemplate,
-  createFragment
 };
 
 

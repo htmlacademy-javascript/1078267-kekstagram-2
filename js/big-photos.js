@@ -1,9 +1,7 @@
 import { MOCKED_PHOTOS } from './examples.js';
 
 const bigPicture = document.querySelector('.big-picture');
-const bigPictureImg = bigPicture
-  .querySelector('.big-picture__img')
-  .querySelector('img');
+const bigPictureImg = bigPicture.querySelector('.big-picture__img').querySelector('img');
 const likesCount = bigPicture.querySelector('.likes-count');
 const socialComments = bigPicture.querySelector('.social__comments');
 const socialCommentTemplate = socialComments.querySelector('.social__comment');
@@ -15,6 +13,7 @@ const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const onBigPictureCancelClick = () => {
   closeBigPicture();
 };
+
 const onEscKeydown = (evt) => {
   if (evt.key === 'Escape') {
     closeBigPicture();
@@ -23,7 +22,8 @@ const onEscKeydown = (evt) => {
 
 const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
-  bigPictureCancel.removeEventListener('keydown', onEscKeydown);
+  bigPictureCancel.removeEventListener('click', onBigPictureCancelClick);
+  document.removeEventListener('keydown', onEscKeydown);
 };
 
 const openBigPicture = (pictureId) => {
@@ -36,12 +36,12 @@ const openBigPicture = (pictureId) => {
   likesCount.textContent = currentPhoto.likes;
   socialComments.innerHTML = '';
 
-  currentPhoto.comments.forEach((comment) => {
+  currentPhoto.comments.forEach((comments) => {
     const socialComment = socialCommentTemplate.cloneNode(true);
-    socialComment.querySelector('social__picture').src = comment.avatar;
-    socialComment.querySelector('social__picture').alt = comment.name;
-    socialComment.querySelector('social__picture').textContent =
-      comment.message;
+    socialComment.querySelector('.social__picture').src = comments.avatar;
+    socialComment.querySelector('.social__picture').alt = comments.name;
+    socialComment.querySelector('.social__text').textContent =
+      comments.message;
 
     socialCommentsFragment.appendChild(socialComment);
   });
