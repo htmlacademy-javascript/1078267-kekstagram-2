@@ -1,25 +1,20 @@
-import {findTemplate} from './utils.js';
+import { MOCKED_PHOTOS} from './examples.js';
 
-const template = findTemplate('picture');
-const container = document.querySelector('.pictures');
+const pictures = document.querySelector('.pictures');
+const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const picturesFragment = document.createDocumentFragment();
 
-const ctrateThumbnail = (photo) => {
-  /** @type {HTMLElement}*/
-  const thumbnail = template.cloneNode(true);
-  const {id, url, likes, comments, description} = photo;
-  thumbnail.href = url;
-  thumbnail.dataset.id = id;
+MOCKED_PHOTOS.forEach(({id, url, comments, likes}) => {
+  const picture = pictureTemplate.cloneNode(true);
+  picture.dataset.pictureId = id;
+  picture.querySelector('.picture__img').src = url;
+  picture.querySelector('.picture__comments').textContent = comments.length;
+  picture.querySelector('.picture__likes').textContent = likes;
 
-  const image = thumbnail.querySelector('.picture__img');
-  image.src = url;
-  image.alt = description;
+  picturesFragment.appendChild(picture);
+});
 
-  thumbnail.querySelector('.picture__comments').textContent = comments.length;
-  thumbnail.querySelector('.picture__likes').textContent = likes;
 
-  return thumbnail;
-};
+pictures.appendChild(picturesFragment);
 
-const renderThumbnail = (photos) => container.append(...photos.map(ctrateThumbnail));
-
-export {renderThumbnail};
+export {pictures};

@@ -1,3 +1,10 @@
-import { MOCKED_PHOTOS} from './examples.js';
-import { renderThumbnail} from './thumbnails.js';
-renderThumbnail(MOCKED_PHOTOS);
+import { pictures} from './thumbnails.js';
+import { openBigPicture} from './big-photos.js';
+
+pictures.addEventListener('click', (evt) => {
+  const currentPicture = evt.target.closest('.picture');
+
+  if (currentPicture) {
+    openBigPicture(currentPicture.dataset.pictureId);
+  }
+});
