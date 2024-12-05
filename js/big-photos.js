@@ -20,11 +20,11 @@ const onEscKeydown = (evt) => {
   }
 };
 
-const closeBigPicture = () => {
+function closeBigPicture() {
   bigPicture.classList.add('hidden');
   bigPictureCancel.removeEventListener('click', onBigPictureCancelClick);
   document.removeEventListener('keydown', onEscKeydown);
-};
+}
 
 const openBigPicture = (pictureId) => {
   const currentPhoto = MOCKED_PHOTOS.find(
