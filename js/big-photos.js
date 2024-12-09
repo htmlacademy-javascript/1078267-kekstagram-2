@@ -44,7 +44,7 @@ const openBigPicture = (pictureId) => {
   document.addEventListener('keydown', onEscKeydown);
 };
 
-const onBigPicture = (photoPreview) => {
+const InitBigPictureLIstener = (photoPreview) => {
   photoPreview.addEventListener('click', (evt) => {
     const currentPicture = evt.target.closest('.picture');
     if (currentPicture) {
@@ -53,6 +53,6 @@ const onBigPicture = (photoPreview) => {
   });
 };
 
-onBigPicture(pictures);
+InitBigPictureLIstener(pictures);
 
 export { openBigPicture};
