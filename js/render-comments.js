@@ -9,19 +9,24 @@ const commentsCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.social__comments-loader');
 socialComments.innerHTML = '';
 
+const creatCommentTemplate = (comment) => {
+  const socialComment = socialCommentTemplate.cloneNode(true);
+
+  socialComment.querySelector('.social__picture').src = comment.avatar;
+  socialComment.querySelector('.social__picture').alt = comment.name;
+  socialComment.querySelector('.social__text').textContent = comment.message;
+
+  return socialComment;
+};
+
 const onLoadMoreButtonClick = () => {
   const socialCommentsFragment = document.createDocumentFragment();
   const renderedComments = comments.slice(currentCount, currentCount + COUNT_STEP);
   const renderedCommentsLength = renderedComments.length + currentCount;
 
   renderedComments.forEach((comment) => {
-    const socialComment = socialCommentTemplate.cloneNode(true);
-
-    socialComment.querySelector('.social__picture').src = comment.avatar;
-    socialComment.querySelector('.social__picture').alt = comment.name;
-    socialComment.querySelector('.social__text').textContent = comment.message;
-
-    socialCommentsFragment.appendChild(socialComment);
+    const socialCommentNode = creatCommentTemplate(comment);
+    socialCommentsFragment.appendChild(socialCommentNode);
   });
 
   socialComments.appendChild(socialCommentsFragment);
