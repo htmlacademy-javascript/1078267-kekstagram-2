@@ -1,4 +1,5 @@
-import { isEscapeKey } from './utils/';
+import { isEscapeKey } from './utils.js';
+import { error, isHashtagValid, isCommentValid } from './hashtag-comment-validation.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const pageBody = document.querySelector('body');
@@ -42,4 +43,25 @@ const initUploadModal = () => {
   });
 };
 
-export {initUploadModal};
+const pristine = new Pristine(uploadForm, {
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextClass: 'img-upload__field-wrapper--error'
+});
+
+
+pristine.addValidator(hashtagInput, isHashtagValid, error);
+
+pristine.addValidator(commentInput, isCommentValid, error);
+
+uploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  pristine.validate();
+
+  if (pristine.validate()) {
+    uploadForm.submit();
+  }
+});
+
+
+export { initUploadModal };
