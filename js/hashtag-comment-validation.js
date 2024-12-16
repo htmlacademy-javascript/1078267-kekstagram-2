@@ -27,12 +27,12 @@ const isCommentValid = (value) => {
 
 
 const isHashtagValid = (value) => {
-  errorMessage = '';
-
-
-  const hashtags = value.split(' ');
-  const rules = [
-    {
+  if (value === '') {
+    return true;
+  } else if (value !== '') {
+    errorMessage = '';
+    const hashtags = value.split(' ');
+    const rules = [ {
       check: hashtags.some((item) => item === '#'),
       error: 'хеш-тег не может состоять только из одной решётки',
     },
@@ -61,16 +61,17 @@ const isHashtagValid = (value) => {
       error: 'строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д',
     },
 
-  ];
+    ];
 
-  return rules.every((rule) => {
-    const isInvalid = rule.check;
-    if (isInvalid) {
-      errorMessage = rule.error;
-    }
-    return !isInvalid;
-  });
-
+    return rules.every((rule) => {
+      const isInvalid = rule.check;
+      if (isInvalid) {
+        errorMessage = rule.error;
+      }
+      return !isInvalid;
+    });
+  }
+  return true;
 };
 
 export { error, isHashtagValid, isCommentValid };
