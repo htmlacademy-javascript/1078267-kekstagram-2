@@ -1,77 +1,55 @@
-const MAX_HASHTAG_SYMBOLS = 20;
-const MAX_HASHTAGS = 20;
+const MAX_HASHTAGS = 5;
 const MAX_COMMENT_LENGTH = 140;
 
-let errorMessage = '';
-const error = () => errorMessage;
+// let errorMessage = '';
+// const error = () => errorMessage;
 
 const isCommentValid = (value) => {
-  errorMessage = '';
+  // errorMessage = '';
 
-  const comment = value;
-  const rules = [
-    {
-      check: comment.length >= MAX_COMMENT_LENGTH,
-      error: `длина комментария не может составлять больше ${MAX_COMMENT_LENGTH}символов`,
-    },
-  ];
+  if (value.length <= MAX_COMMENT_LENGTH) {
+    return true;
+  }
 
-  return rules.every((rule) => {
-    const isInvalid = rule.check;
-    if (isInvalid) {
-      errorMessage = rule.error;
-    }
-    return !isInvalid;
-  });
 };
-
 
 const isHashtagValid = (value) => {
-  if (value === '') {
-    return true;
-  } else if (value !== '') {
-    errorMessage = '';
-    const hashtags = value.split(' ');
-    const rules = [ {
-      check: hashtags.some((item) => item === '#'),
-      error: 'хеш-тег не может состоять только из одной решётки',
-    },
-    {
-      check: hashtags.some((item) => item.slice(1).includes('#')),
-      error: 'хэштеги разделяются пробелами',
-    },
-    {
-      check: hashtags.some((item) => item[0] !== '#'),
-      error: 'хэштег начинается с символа # (решётка)',
-    },
-    {
-      check: hashtags.some((item, index, array) => array.includes(item, index + 1)),
-      error: 'один и тот же хэштег не может быть использован дважды',
-    },
-    {
-      check: hashtags.some((item) => item.length >= MAX_HASHTAG_SYMBOLS),
-      error: `максимальная длина одного хэштега ${MAX_HASHTAG_SYMBOLS} символов, включая решётку`,
-    },
-    {
-      check: hashtags.length > MAX_HASHTAGS,
-      error: `нельзя указать больше ${MAX_HASHTAGS} хэштегов`,
-    },
-    {
-      check: hashtags.some((item) => !/^#[a-zа-яё0-9]{1,19}$/i.test(item)),
-      error: 'строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д',
-    },
+  const hashtag = value.split(' ');
+  const validHashtagRegular = /^#[a-z-я-ё0-9]{1,19}$/i;
+  let i = 0;
+  const regularTest = validHashtagRegular.test(hashtag[i]);
 
-    ];
-
-    return rules.every((rule) => {
-      const isInvalid = rule.check;
-      if (isInvalid) {
-        errorMessage = rule.error;
-      }
-      return !isInvalid;
-    });
+  while(regularTest) {
+    i++;
+    if (regularTest === false) {
+      break;
+    }
+    return regularTest;
   }
-  return true;
 };
 
-export { error, isHashtagValid, isCommentValid };
+
+// const isHashtagRegularValid = (value) => {
+//   const hashtag = value.split(' ');
+//   const validHashtagRegular = /^#[a-z-я-ё0-9]{1,19}$/i;
+//   let i = 0;
+//   const regularTest = validHashtagRegular.test(hashtag[i]);
+
+//   while(regularTest) {
+//     i++;
+//     if (regularTest === false) {
+//       break;
+//     }
+//     return regularTest;
+//   }
+// };
+
+//создать массив из isHashtagRegularValid
+
+// isHashtagValid(isHashtagRegularValid);
+
+
+export {isHashtagValid, isCommentValid };
+
+// const isCommentValid = (comment, id, comments) => { тут пишем логику для валидации одного коммента }
+// hashtags.every(isCommentValid)
