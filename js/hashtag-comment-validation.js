@@ -14,39 +14,24 @@ const isCommentValid = (value) => {
 };
 
 const isHashtagValid = (value) => {
-  const hashtag = value.split(' ');
-  const validHashtagRegular = /^#[a-z-я-ё0-9]{1,19}$/i;
-  let i = 0;
-  const regularTest = validHashtagRegular.test(hashtag[i]);
 
-  while(regularTest) {
-    i++;
-    if (regularTest === false) {
-      break;
+  if (value === '') {
+    return true;
+  } else if (value !== '') {
+    const hashtag = value.split(' ');
+    const validHashtagRegular = /^#[a-z-я-ё0-9]{1,19}$/i;
+    let i = 0;
+    const regularTest = validHashtagRegular.test(hashtag[i]);
+
+    while(regularTest) {
+      i++;
+      if (regularTest === false) {
+        break;
+      }
+      return regularTest;
     }
-    return regularTest;
   }
 };
-
-
-// const isHashtagRegularValid = (value) => {
-//   const hashtag = value.split(' ');
-//   const validHashtagRegular = /^#[a-z-я-ё0-9]{1,19}$/i;
-//   let i = 0;
-//   const regularTest = validHashtagRegular.test(hashtag[i]);
-
-//   while(regularTest) {
-//     i++;
-//     if (regularTest === false) {
-//       break;
-//     }
-//     return regularTest;
-//   }
-// };
-
-//создать массив из isHashtagRegularValid
-
-// isHashtagValid(isHashtagRegularValid);
 
 
 export {isHashtagValid, isCommentValid };
