@@ -1,5 +1,5 @@
 import { isEscapeKey } from './utils.js';
-import { isHashtagValid, isCommentValid } from './hashtag-comment-validation.js';
+import { validateHashtagField, isCommentValid } from './hashtag-comment-validation.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const pageBody = document.querySelector('body');
@@ -50,7 +50,7 @@ const pristine = new Pristine(uploadForm, {
 });
 
 
-pristine.addValidator(hashtagInput, isHashtagValid, 'хэштеги указаны некорректно');
+pristine.addValidator(hashtagInput, validateHashtagField, 'хэштеги указаны некорректно');
 
 pristine.addValidator(commentInput, isCommentValid, 'комментарий не может сожержать больше 140 символов');
 

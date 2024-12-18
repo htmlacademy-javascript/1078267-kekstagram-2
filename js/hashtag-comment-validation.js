@@ -1,40 +1,40 @@
 const MAX_HASHTAGS = 5;
 const MAX_COMMENT_LENGTH = 140;
 
-// let errorMessage = '';
-// const error = () => errorMessage;
-
 const isCommentValid = (value) => {
-  // errorMessage = '';
 
-  if (value.length <= MAX_COMMENT_LENGTH) {
-    return true;
+  if (value.length > MAX_COMMENT_LENGTH) {
+    return false;
   }
+  return true;
+};
+
+const validHashtagRegular = /^#[a-za-яё0-9]{1,19}$/i;
+
+const isHashtagValid = (value) => validHashtagRegular.test(value);
+
+const isHashtagsValid = (hashtagArray) => {
+  if (hashtagArray.length > MAX_HASHTAGS) {
+    return false;
+  }
+
+  const parsedHashtags = hashtagArray.map((element) => element.toLowerCase());
+  const uniqueHashtags = new Set(parsedHashtags);
+
+
+  if (parsedHashtags.length !== uniqueHashtags.size) {
+    return false;
+  }
+
+
+  return hashtagArray.every(isHashtagValid);
+};
+
+const validateHashtagField = (value) => {
+  const hashtagsArrey = value.split(' ').filter((element) => Boolean(element));
+
+  return isHashtagsValid(hashtagsArrey);
 
 };
 
-const isHashtagValid = (value) => {
-
-  if (value === '') {
-    return true;
-  } else if (value !== '') {
-    const hashtag = value.split(' ');
-    const validHashtagRegular = /^#[a-z-я-ё0-9]{1,19}$/i;
-    let i = 0;
-    const regularTest = validHashtagRegular.test(hashtag[i]);
-
-    while(regularTest) {
-      i++;
-      if (regularTest === false) {
-        break;
-      }
-      return regularTest;
-    }
-  }
-};
-
-
-export {isHashtagValid, isCommentValid };
-
-// const isCommentValid = (comment, id, comments) => { тут пишем логику для валидации одного коммента }
-// hashtags.every(isCommentValid)
+export {validateHashtagField, isCommentValid };
