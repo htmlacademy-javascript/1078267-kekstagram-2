@@ -1,5 +1,8 @@
 import { isEscapeKey } from './utils.js';
 import { validateHashtagField, isCommentValid } from './hashtag-comment-validation.js';
+import { initScaleControle } from './scale-controle.js';
+import { initEffects, resetEffects } from './effect-slider-editor.js';
+// import { onEffectRadioButtonClick, resetFilter } from './effect-slider-editor.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const pageBody = document.querySelector('body');
@@ -9,12 +12,6 @@ const photoEditorResetButton = uploadForm.querySelector('#upload-cancel');
 
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
 const commentInput = uploadForm.querySelector('.text__description');
-
-const scaleControlSmaller = uploadForm.querySelector('.scale__control--smaller');
-const scaleControlBigger = uploadForm.querySelector('.scale__control--bigger');
-const scaleControl = uploadForm.querySelector('.scale__control--value');
-const image = uploadForm.querySelector('img');
-const SCALE_STEP = 0.25;
 
 const onImageUploaderCancelClick = () => {
   closePhotoEditor();
@@ -47,6 +44,8 @@ const initUploadModal = () => {
     photoEditorResetButton.addEventListener('click', onImageUploaderCancelClick);
     document.addEventListener('keydown', onDocumentKeydown);
   });
+
+  resetEffects();
 };
 
 const pristine = new Pristine(uploadForm, {
@@ -69,25 +68,7 @@ uploadForm.addEventListener('submit', (evt) => {
   }
 });
 
-let scale = 1;
+initScaleControle();
+initEffects();
 
-const onSmallerClick = () => {
-  if (scale > SCALE_STEP) {
-    scale -= SCALE_STEP;
-    image.style.transform = `scale(${scale})`;
-    scaleControl.value = `${scale * 100}%`;
-  }
-};
-scaleControlSmaller.addEventListener('click', onSmallerClick);
-
-const onBiggerClick = () => {
-  if (scale < 1) {
-    scale += SCALE_STEP;
-    image.style.transform = `scale(${scale})`;
-    scaleControl.value = `${scale * 100}%`;
-  }
-};
-scaleControlBigger.addEventListener('click', onBiggerClick);
-
-
-export { initUploadModal };
+export { initUploadModal};

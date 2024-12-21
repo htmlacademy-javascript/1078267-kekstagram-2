@@ -35,7 +35,7 @@ export {
   getRandomInteger,
   createRandomIdFromRangeGenerator,
   createIdGenerator,
-  isEscapeKey
+  isEscapeKey,
 };
 
 

@@ -35,4 +35,4 @@ const NAMES = [
   'Лена',
 ];
 
-export {MESSAGES, NAMES};
+export {MESSAGES, NAMES, EFFECT_LEVEL_MAX, Effects, styleFilterByEffect};
