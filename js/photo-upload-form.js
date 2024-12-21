@@ -10,6 +10,12 @@ const photoEditorResetButton = uploadForm.querySelector('#upload-cancel');
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
 const commentInput = uploadForm.querySelector('.text__description');
 
+const scaleControlSmaller = uploadForm.querySelector('.scale__control--smaller');
+const scaleControlBigger = uploadForm.querySelector('.scale__control--bigger');
+const scaleControl = uploadForm.querySelector('.scale__control--value');
+const image = uploadForm.querySelector('img');
+const SCALE_STEP = 0.25;
+
 const onImageUploaderCancelClick = () => {
   closePhotoEditor();
 };
@@ -62,6 +68,26 @@ uploadForm.addEventListener('submit', (evt) => {
     uploadForm.submit();
   }
 });
+
+let scale = 1;
+
+const onSmallerClick = () => {
+  if (scale > SCALE_STEP) {
+    scale -= SCALE_STEP;
+    image.style.transform = `scale(${scale})`;
+    scaleControl.value = `${scale * 100}%`;
+  }
+};
+scaleControlSmaller.addEventListener('click', onSmallerClick);
+
+const onBiggerClick = () => {
+  if (scale < 1) {
+    scale += SCALE_STEP;
+    image.style.transform = `scale(${scale})`;
+    scaleControl.value = `${scale * 100}%`;
+  }
+};
+scaleControlBigger.addEventListener('click', onBiggerClick);
 
 
 export { initUploadModal };
