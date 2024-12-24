@@ -1,32 +1,39 @@
+import { Range } from './utils.js';
+
 const uploadForm = document.querySelector('.img-upload__form');
+const imageUploadPreviewContainer = uploadForm.querySelector('img');
 const scaleControlSmaller = uploadForm.querySelector('.scale__control--smaller');
 const scaleControlBigger = uploadForm.querySelector('.scale__control--bigger');
 const scaleControl = uploadForm.querySelector('.scale__control--value');
-const image = uploadForm.querySelector('img');
-const SCALE_STEP = 0.25;
 
-let scale = 1;
+let scale = new Range(25, 100, 25, 100);
 
-const onSmallerClick = () => {
-  if (scale > SCALE_STEP) {
-    scale -= SCALE_STEP;
-    image.style.transform = `scale(${scale})`;
-    scaleControl.value = `${scale * 100}%`;
-  }
+const updateScale = () => {
+  scaleControl.value = `${scale.value}%`;
+  const scaleParam = parseFloat(scale.value / 100).toFixed(2);
+  imageUploadPreviewContainer.style.transform = `scale(${scaleParam})`;
 };
 
+const resetScale = () => {
+  scale = new Range(25, 100, 25, 100);
+  updateScale();
+};
 
-const onBiggerClick = () => {
-  if (scale < 1) {
-    scale += SCALE_STEP;
-    image.style.transform = `scale(${scale})`;
-    scaleControl.value = `${scale * 100}%`;
-  }
+const onScaleIncreaseClick = () => {
+  scale.increase();
+  updateScale();
+};
+
+const onScaleDecreaseClick = () => {
+  scale.decrease();
+  updateScale();
 };
 
 const initScaleControle = () => {
-  scaleControlSmaller.addEventListener('click', onSmallerClick);
-  scaleControlBigger.addEventListener('click', onBiggerClick);
+  scaleControlBigger.addEventListener('click', onScaleIncreaseClick);
+  scaleControlSmaller.addEventListener('click', onScaleDecreaseClick);
+  updateScale();
 };
 
-export {initScaleControle};
+
+export {initScaleControle, resetScale};

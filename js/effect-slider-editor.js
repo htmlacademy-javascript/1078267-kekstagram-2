@@ -1,3 +1,4 @@
+import { resetScale } from './scale-controle.js';
 const photoPreview = document.querySelector('.img-upload__preview');
 const imagePreview = photoPreview.querySelector('img');
 const effectsRadioButtonList = document.querySelector('.effects__list');
@@ -43,6 +44,7 @@ const onEffectChange = (evt) => {
     const effectName = evt.target.getAttribute('id').split('-')[1];
     currentEffect = effects[effectName];
     currentEffect.apply();
+    resetScale();
   }
 };
 
