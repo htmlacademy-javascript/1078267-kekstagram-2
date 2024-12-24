@@ -1,5 +1,7 @@
 import { isEscapeKey } from './utils.js';
 import { validateHashtagField, isCommentValid } from './hashtag-comment-validation.js';
+import { initScaleControle, resetScale } from './scale-controle.js';
+import { initEffects, resetEffects } from './effect-slider-editor.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const pageBody = document.querySelector('body');
@@ -38,6 +40,8 @@ const initUploadModal = () => {
   uploadFile.addEventListener('change', () => {
     photoEditorForm.classList.remove('hidden');
     pageBody.classList.add('modal-open');
+    resetScale();
+    resetEffects();
     photoEditorResetButton.addEventListener('click', onImageUploaderCancelClick);
     document.addEventListener('keydown', onDocumentKeydown);
   });
@@ -63,5 +67,7 @@ uploadForm.addEventListener('submit', (evt) => {
   }
 });
 
+initScaleControle();
+initEffects();
 
-export { initUploadModal };
+export { initUploadModal};
