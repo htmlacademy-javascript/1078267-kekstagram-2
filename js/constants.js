@@ -35,4 +35,6 @@ const NAMES = [
   'Лена',
 ];
 
-export {MESSAGES, NAMES, EFFECT_LEVEL_MAX, Effects, styleFilterByEffect};
+const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram/data';
+
+export {MESSAGES, NAMES, BASE_URL};
