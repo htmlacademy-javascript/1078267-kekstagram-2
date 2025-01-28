@@ -66,13 +66,22 @@ Range.prototype.decrease = function() {
   this.value = Math.max(this.value - this._step, this._min);
 };
 
+let photos = [];
+const savePhotos = (newPhotos) => {
+  photos = newPhotos;
+};
+
+const getPhotoById = (id) => photos.find((photo) => photo.id === id);
+
 export {
   getRandomInteger,
   createRandomIdFromRangeGenerator,
   createIdGenerator,
   isEscapeKey,
   Range,
-  showErrorMessage
+  showErrorMessage,
+  savePhotos,
+  getPhotoById
 };
 
 

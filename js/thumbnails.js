@@ -19,4 +19,4 @@ const renderPreview = (photoArray) => {
 
 renderPreview(MOCKED_PHOTOS);
 
-export {pictures};
+export {pictures, renderPreview};

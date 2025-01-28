@@ -35,6 +35,6 @@ const NAMES = [
   'Лена',
 ];
 
-const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram/data';
+const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 
 export {MESSAGES, NAMES, BASE_URL};
