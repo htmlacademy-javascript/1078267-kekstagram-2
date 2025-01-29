@@ -1,4 +1,4 @@
-import { isEscapeKey } from './utils.js';
+import { isEscapeKey, appendNotofication } from './utils.js';
 import { validateHashtagField, isCommentValid } from './hashtag-comment-validation.js';
 import { initScaleControle, resetScale } from './scale-controle.js';
 import { initEffects, resetEffects } from './effect-slider-editor.js';
@@ -12,6 +12,9 @@ const photoEditorResetButton = uploadForm.querySelector('#upload-cancel');
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
 const commentInput = uploadForm.querySelector('.text__description');
 const uploadFormSubmitButton = uploadForm.querySelector('.img-upload__submit');
+
+const templateSuccess = document.querySelector('#success').content;
+const templateError = document.querySelector('#error').content;
 
 const uploadFormSubmitButtonText = {
   IDLE: 'Сохранить',
@@ -50,8 +53,6 @@ function closePhotoEditor() {
   document.removeEventListener('keydown', onDocumentKeydown);
   photoEditorResetButton.removeEventListener('click', onImageUploaderCancelClick);
   uploadFile.value = '';
-  // resetScale();
-  // resetEffects();
 }
 
 const initUploadModal = () => {
@@ -80,9 +81,15 @@ const sendFormData = async (formElement) => {
   const isValid = pristine.validate();
   if(isValid) {
     disableButton(uploadFormSubmitButtonText.SENDING);
-    await sendData(new FormData (formElement));
-    enableButton(uploadFormSubmitButtonText.IDLE);
-    closePhotoEditor();
+    try {
+      await sendData(new FormData (formElement));
+      appendNotofication(templateSuccess, () => closePhotoEditor(uploadForm));
+    } catch (error) {
+      appendNotofication(templateError);
+    } finally {
+      enableButton(uploadFormSubmitButtonText.IDLE);
+    }
+
   }
 };
 
@@ -92,15 +99,6 @@ const formSubmitHandler = (evt) => {
 };
 
 uploadForm.addEventListener('submit', formSubmitHandler);
-
-// uploadForm.addEventListener('submit', (evt) => {
-//   evt.preventDefault();
-//   pristine.validate();
-
-//   if (pristine.validate()) {
-//     uploadForm.submit();
-//   }
-// });
 
 initScaleControle();
 initEffects();

@@ -3,6 +3,27 @@ const REMOVE_MESSAGE_TIMEOUT = 5000;
 const errorLoadDataTemplate = document.querySelector('#data-error').content;
 const body = document.body;
 
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+const closeNotification = (evt) => {
+  evt.stopPropagation();
+  const existElement = document.querySelector('.success') || document.querySelector('.error');
+  const closeButton = existElement.querySelector('button');
+  if (evt.target === existElement || evt.target === closeButton || isEscapeKey(evt)) {
+    existElement.remove();
+    body.removeEventListener('click', closeNotification);
+    body.removeEventListener('keydown', closeNotification);
+  }
+};
+
+const appendNotofication = (template, trigger = null) => {
+  trigger?.();
+  const notificationNode = template.cloneNode(true);
+  body.append(notificationNode);
+  body.addEventListener('click', closeNotification);
+  body.addEventListener('keydown', closeNotification);
+};
+
 const showErrorMessage = (message) => {
   const errorArea = errorLoadDataTemplate.cloneNode(true);
   if (message) {
@@ -49,8 +70,6 @@ const createIdGenerator = () => {
   };
 };
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
-
 function Range(min = 0, max = 100, step = 1, value) {
   this._min = min;
   this._max = max;
@@ -81,7 +100,8 @@ export {
   Range,
   showErrorMessage,
   savePhotos,
-  getPhotoById
+  getPhotoById,
+  appendNotofication
 };
 
 
