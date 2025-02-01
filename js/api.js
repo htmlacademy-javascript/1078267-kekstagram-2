@@ -1,4 +1,4 @@
-import {BASE_URL} from './constants.js';
+const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 
 const Route = {
   GET_DATA: '/data',
@@ -24,5 +24,5 @@ const getData = async () => await load(Route.GET_DATA);
 
 const sendData = async (body) => await load(Route.SEND_DATA, Method.POST, body);
 
-export {getData, sendData};
+export { getData, sendData };
 
