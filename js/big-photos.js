@@ -1,4 +1,3 @@
-import { MOCKED_PHOTOS } from './examples.js';
 import { clearComments, renderComments } from './render-comments.js';
 import { pictures} from './thumbnails.js';
 
@@ -27,8 +26,8 @@ function closeBigPicture() {
   document.removeEventListener('keydown', onEscKeydown);
 }
 
-const openBigPicture = (pictureId) => {
-  const currentPhoto = MOCKED_PHOTOS.find(
+const openBigPicture = (pictureId, serverPhotos) => {
+  const currentPhoto = serverPhotos.find(
     (photo) => photo.id === Number(pictureId)
   );
 
@@ -44,15 +43,13 @@ const openBigPicture = (pictureId) => {
   document.addEventListener('keydown', onEscKeydown);
 };
 
-const InitBigPictureLIstener = (photoPreview) => {
-  photoPreview.addEventListener('click', (evt) => {
+const InitBigPictureListener = (serverPhotos) => {
+  pictures.addEventListener('click', (evt) => {
     const currentPicture = evt.target.closest('.picture');
     if (currentPicture) {
-      openBigPicture(currentPicture.dataset.pictureId);
+      openBigPicture(currentPicture.dataset.pictureId, serverPhotos);
     }
   });
 };
 
-InitBigPictureLIstener(pictures);
-
-export { openBigPicture};
+export { openBigPicture, InitBigPictureListener };

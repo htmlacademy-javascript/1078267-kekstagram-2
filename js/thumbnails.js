@@ -1,5 +1,3 @@
-import { MOCKED_PHOTOS} from './examples.js';
-
 const pictures = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const picturesFragment = document.createDocumentFragment();
@@ -17,6 +15,4 @@ const renderPreview = (photoArray) => {
   pictures.appendChild(picturesFragment);
 };
 
-renderPreview(MOCKED_PHOTOS);
-
-export {pictures};
+export {pictures, renderPreview};
