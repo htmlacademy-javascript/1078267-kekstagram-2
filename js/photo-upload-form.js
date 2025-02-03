@@ -16,7 +16,7 @@ const uploadFormSubmitButton = uploadForm.querySelector('.img-upload__submit');
 const templateSuccess = document.querySelector('#success').content;
 const templateError = document.querySelector('#error').content;
 
-const uploadFormSubmitButtonText = {
+const UploadFormSubmitButtonText = {
   IDLE: 'Сохранить',
   SENDING: 'Сохраняю...',
 };
@@ -41,7 +41,6 @@ const onDocumentKeydown = (evt) => {
     if(document.activeElement === hashtagInput || document.activeElement === commentInput){
       evt.stopPropagation();
     } else {
-      uploadForm.requestFullscreen();
       closePhotoEditor();
     }
   }
@@ -53,14 +52,17 @@ function closePhotoEditor() {
   document.removeEventListener('keydown', onDocumentKeydown);
   photoEditorResetButton.removeEventListener('click', onImageUploaderCancelClick);
   uploadFile.value = '';
+  hashtagInput.value = '';
+  commentInput.value = '';
+  resetScale();
+  resetEffects();
+
 }
 
 const initUploadModal = () => {
   uploadFile.addEventListener('change', () => {
     photoEditorForm.classList.remove('hidden');
     pageBody.classList.add('modal-open');
-    resetScale();
-    resetEffects();
     photoEditorResetButton.addEventListener('click', onImageUploaderCancelClick);
     document.addEventListener('keydown', onDocumentKeydown);
   });
@@ -68,8 +70,8 @@ const initUploadModal = () => {
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper--error'
+  ErrorTextParent: 'img-upload__field-wrapper',
+  ErrorTextClass: 'img-upload__field-wrapper--error'
 });
 
 
@@ -80,14 +82,14 @@ pristine.addValidator(commentInput, isCommentValid, 'комментарий не
 const sendFormData = async (formElement) => {
   const isValid = pristine.validate();
   if(isValid) {
-    disableButton(uploadFormSubmitButtonText.SENDING);
+    disableButton(UploadFormSubmitButtonText.SENDING);
     try {
       await sendData(new FormData (formElement));
       appendNotofication(templateSuccess, () => closePhotoEditor(uploadForm));
     } catch (error) {
       appendNotofication(templateError);
     } finally {
-      enableButton(uploadFormSubmitButtonText.IDLE);
+      enableButton(UploadFormSubmitButtonText.IDLE);
     }
 
   }

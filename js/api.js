@@ -10,14 +10,14 @@ const Method = {
   POST: 'POST',
 };
 
-const errorText = {
+const ErrorText = {
   [Method.GET]: 'Не удалось загрузить данные, пожалуйста, попробуйте еще раз',
   [Method.POST]: 'Не удалось отправить данные формы',
 };
 
 const load = async (route, method = Method.GET, body = null) => {
   const response = await fetch(`${BASE_URL}${route}`, {method, body});
-  return response.ok ? response.json() : Promise.reject({message: errorText[method], status: response.status});
+  return response.ok ? response.json() : Promise.reject({message: ErrorText[method], status: response.status});
 };
 
 const getData = async () => await load(Route.GET_DATA);
