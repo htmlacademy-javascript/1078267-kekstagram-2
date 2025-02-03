@@ -3,6 +3,7 @@ import { initUploadModal } from './photo-upload-form.js';
 import {renderPreview} from './thumbnails.js';
 import {getData} from './api.js';
 import {showErrorMessage, savePhotos} from './utils.js';
+import {configFilter} from './filter.js';
 
 const bootstrap = async () => {
   try {
@@ -10,6 +11,7 @@ const bootstrap = async () => {
     savePhotos(photos);
     renderPreview(photos);
     InitBigPictureListener(photos);
+    configFilter(photos);
   } catch (error) {
     showErrorMessage(error.message);
   }
