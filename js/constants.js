@@ -4,11 +4,11 @@ const FILTER = {
   discussed: 'filter-discussed',
 };
 
-const SORT_FUNC = {
-  random: () => 0.5 - Math.random(),
-  discussed: (a, b) => b.comments.length - a.comments.length,
+const SortFunc = {
+  RANDOM: () => 0.5 - Math.random(),
+  DISCUSSED: (a, b) => b.comments.length - a.comments.length,
 };
 
 const MAX_PICTURE_COUNT = 10;
 
-export { FILTER, SORT_FUNC, MAX_PICTURE_COUNT };
+export { FILTER, SortFunc, MAX_PICTURE_COUNT };

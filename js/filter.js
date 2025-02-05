@@ -1,7 +1,7 @@
-// import { openBigPicture, InitBigPictureListener } from './big-photos.js';
+
 import { pictures, renderPreview } from './thumbnails.js';
 import { debounce } from './utils.js';
-import { FILTER, SORT_FUNC, MAX_PICTURE_COUNT } from './constants.js';
+import { FILTER, SortFunc, MAX_PICTURE_COUNT } from './constants.js';
 
 
 let currentFilter = 'filter-default';
@@ -29,7 +29,7 @@ function onFilterChange(evt) {
   applyFilter();
 }
 
-function clearBigPhoto() {
+function clearThumbnails() {
   pictures.querySelectorAll('a.picture').forEach((item) => item.remove());
 }
 
@@ -40,13 +40,13 @@ function applyFilter() {
     filteredPictures = photos;
   }
   if (currentFilter === FILTER.random) {
-    filteredPictures = photos.toSorted(SORT_FUNC.random).slice(0, MAX_PICTURE_COUNT);
+    filteredPictures = photos.toSorted(SortFunc.RANDOM).slice(0, MAX_PICTURE_COUNT);
   }
   if (currentFilter === FILTER.discussed) {
-    filteredPictures = photos.toSorted(SORT_FUNC.discussed);
+    filteredPictures = photos.toSorted(SortFunc.DISCUSSED);
   }
   debounceRender(filteredPictures);
-  clearBigPhoto();
+  clearThumbnails();
 }
 
 function configFilter(picturesData) {

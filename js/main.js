@@ -1,4 +1,4 @@
-import { InitBigPictureListener } from './big-photos.js';
+import { initBigPictureListener } from './big-photos.js';
 import { initUploadModal } from './photo-upload-form.js';
 import {renderPreview} from './thumbnails.js';
 import {getData} from './api.js';
@@ -10,7 +10,7 @@ const bootstrap = async () => {
     const photos = await getData();
     savePhotos(photos);
     renderPreview(photos);
-    InitBigPictureListener(photos);
+    initBigPictureListener(photos);
     configFilter(photos);
   } catch (error) {
     showErrorMessage(error.message);

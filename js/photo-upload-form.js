@@ -46,6 +46,12 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+const pristine = new Pristine(uploadForm, {
+  classTo: 'img-upload__field-wrapper',
+  ErrorTextParent: 'img-upload__field-wrapper',
+  ErrorTextClass: 'img-upload__field-wrapper--error'
+});
+
 function closePhotoEditor() {
   photoEditorForm.classList.add('hidden');
   pageBody.classList.remove('modal-open');
@@ -56,7 +62,7 @@ function closePhotoEditor() {
   commentInput.value = '';
   resetScale();
   resetEffects();
-
+  pristine.reset();
 }
 
 const initUploadModal = () => {
@@ -67,13 +73,6 @@ const initUploadModal = () => {
     document.addEventListener('keydown', onDocumentKeydown);
   });
 };
-
-const pristine = new Pristine(uploadForm, {
-  classTo: 'img-upload__field-wrapper',
-  ErrorTextParent: 'img-upload__field-wrapper',
-  ErrorTextClass: 'img-upload__field-wrapper--error'
-});
-
 
 pristine.addValidator(hashtagInput, validateHashtagField, 'хэштеги указаны некорректно');
 
