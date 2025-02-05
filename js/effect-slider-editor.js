@@ -1,7 +1,9 @@
 import { resetScale } from './scale-controle.js';
 const photoPreview = document.querySelector('.img-upload__preview');
 const imagePreview = photoPreview.querySelector('img');
+
 const effectsRadioButtonList = document.querySelector('.effects__list');
+
 const effectLevelInput = document.querySelector('.effect-level__value');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 
@@ -25,6 +27,8 @@ defaulEffect.apply = () => {
   sliderContainer.hidden = true;
   imagePreview.style = '';
   imagePreview.classList.remove(...classNames);
+  const effectNoneRadio = document.getElementById('effect-none');
+  effectNoneRadio.checked = true;
 };
 
 defaulEffect.updateLevel = () => {};
