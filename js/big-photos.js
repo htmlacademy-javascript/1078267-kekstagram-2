@@ -43,7 +43,7 @@ const openBigPicture = (pictureId, serverPhotos) => {
   document.addEventListener('keydown', onEscKeydown);
 };
 
-const InitBigPictureListener = (serverPhotos) => {
+const initBigPictureListener = (serverPhotos) => {
   pictures.addEventListener('click', (evt) => {
     const currentPicture = evt.target.closest('.picture');
     if (currentPicture) {
@@ -52,4 +52,4 @@ const InitBigPictureListener = (serverPhotos) => {
   });
 };
 
-export { openBigPicture, InitBigPictureListener };
+export { openBigPicture, initBigPictureListener };

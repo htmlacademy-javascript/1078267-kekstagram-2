@@ -92,6 +92,14 @@ const savePhotos = (newPhotos) => {
 
 const getPhotoById = (id) => photos.find((photo) => photo.id === id);
 
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
 export {
   getRandomInteger,
   createRandomIdFromRangeGenerator,
@@ -101,7 +109,8 @@ export {
   showErrorMessage,
   savePhotos,
   getPhotoById,
-  appendNotofication
+  appendNotofication,
+  debounce
 };
 
 
