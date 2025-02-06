@@ -1,4 +1,4 @@
-import { isEscapeKey, appendNotofication, showToastError } from './utils.js';
+import { isEscapeKey, appendNotofication, showErrorMessage } from './utils.js';
 import { validateHashtagField, isCommentValid } from './hashtag-comment-validation.js';
 import { initScaleControle, resetScale } from './scale-controle.js';
 import { initEffects, resetEffects } from './effect-slider-editor.js';
@@ -76,10 +76,11 @@ const initUploadModal = () => {
     pageBody.classList.add('modal-open');
     photoEditorResetButton.addEventListener('click', onImageUploaderCancelClick);
     document.addEventListener('keydown', onDocumentKeydown);
+    onFileIputChange();
   });
 };
 
-function onFileIputChamge() {
+function onFileIputChange() {
   const file = uploadFile.files[0];
   const fileName = file.name.toLowerCase();
   const fileExtention = fileName.split('.').pop();
@@ -91,11 +92,8 @@ function onFileIputChamge() {
       item.style.backgroundImage = `url(${url})`;
     });
   } else {
-    showToastError('Выбран неверный тип файла');
-    return;
+    showErrorMessage();
   }
-
-  initUploadModal();
 }
 
 pristine.addValidator(hashtagInput, validateHashtagField, 'хэштеги указаны некорректно');
@@ -128,4 +126,4 @@ uploadForm.addEventListener('submit', formSubmitHandler);
 initScaleControle();
 initEffects();
 
-export { initUploadModal, onFileIputChamge };
+export { initUploadModal, onFileIputChange as onFileIputChamge };

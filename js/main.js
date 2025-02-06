@@ -1,5 +1,5 @@
 import { initBigPictureListener } from './big-photos.js';
-import { initUploadModal, onFileIputChamge } from './photo-upload-form.js';
+import { initUploadModal } from './photo-upload-form.js';
 import {renderPreview} from './thumbnails.js';
 import {getData} from './api.js';
 import {showErrorMessage, savePhotos} from './utils.js';
@@ -19,4 +19,3 @@ const bootstrap = async () => {
 
 initUploadModal();
 bootstrap();
-onFileIputChamge();
