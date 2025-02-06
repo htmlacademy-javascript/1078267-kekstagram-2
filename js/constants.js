@@ -11,4 +11,6 @@ const SortFunc = {
 
 const MAX_PICTURE_COUNT = 10;
 
-export { FILTER, SortFunc, MAX_PICTURE_COUNT };
+const FILE_TYPES = ['jpg', 'jpeg', 'png', 'gif', 'jfif'];
+
+export { FILTER, SortFunc, MAX_PICTURE_COUNT, FILE_TYPES };

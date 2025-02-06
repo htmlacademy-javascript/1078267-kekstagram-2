@@ -38,6 +38,18 @@ const showErrorMessage = (message) => {
   }, REMOVE_MESSAGE_TIMEOUT);
 };
 
+function showToastError (errorMessage) {
+  const errorElement = errorLoadDataTemplate.cloneNode(true);
+  if(errorMessage) {
+    errorElement.querySelector('.data-error__title').textContent = errorMessage;
+  }
+  document.body.appendChild(errorElement);
+  setTimeout(() => (errorElement.remove()), REMOVE_MESSAGE_TIMEOUT);
+}
+
+function showFetchError() {
+  showToastError();
+}
 
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -110,7 +122,9 @@ export {
   savePhotos,
   getPhotoById,
   appendNotofication,
-  debounce
+  debounce,
+  showFetchError,
+  showToastError
 };
 
 

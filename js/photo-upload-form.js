@@ -1,20 +1,25 @@
-import { isEscapeKey, appendNotofication } from './utils.js';
+import { isEscapeKey, appendNotofication, showToastError } from './utils.js';
 import { validateHashtagField, isCommentValid } from './hashtag-comment-validation.js';
 import { initScaleControle, resetScale } from './scale-controle.js';
 import { initEffects, resetEffects } from './effect-slider-editor.js';
 import {sendData} from './api.js';
+import {FILE_TYPES} from './constants.js';
+
 
 const uploadForm = document.querySelector('.img-upload__form');
 const pageBody = document.querySelector('body');
-const uploadFile = uploadForm.querySelector('#upload-file');
+const uploadFile = uploadForm.querySelector('.img-upload__input');
 const photoEditorForm = uploadForm.querySelector('.img-upload__overlay');
 const photoEditorResetButton = uploadForm.querySelector('#upload-cancel');
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
 const commentInput = uploadForm.querySelector('.text__description');
 const uploadFormSubmitButton = uploadForm.querySelector('.img-upload__submit');
+const uploadPreview = document.querySelector('.img-upload__preview > img');
+const UploadPreviewEffects = document.querySelector('.effects__preview');
 
 const templateSuccess = document.querySelector('#success').content;
 const templateError = document.querySelector('#error').content;
+
 
 const UploadFormSubmitButtonText = {
   IDLE: 'Сохранить',
@@ -74,6 +79,25 @@ const initUploadModal = () => {
   });
 };
 
+function onFileIputChamge() {
+  const file = uploadFile.files[0];
+  const fileName = file.name.toLowerCase();
+  const fileExtention = fileName.split('.').pop();
+  const matches = FILE_TYPES.includes(fileExtention);
+  if(matches) {
+    const url = URL.createObjectURL(file);
+    uploadPreview.src = url;
+    UploadPreviewEffects.forEach((item) => {
+      item.style.backgroundImage = `url(${url})`;
+    });
+  } else {
+    showToastError('Выбран неверный тип файла');
+    return;
+  }
+
+  initUploadModal();
+}
+
 pristine.addValidator(hashtagInput, validateHashtagField, 'хэштеги указаны некорректно');
 
 pristine.addValidator(commentInput, isCommentValid, 'комментарий не может сожержать больше 140 символов');
@@ -104,4 +128,4 @@ uploadForm.addEventListener('submit', formSubmitHandler);
 initScaleControle();
 initEffects();
 
-export { initUploadModal};
+export { initUploadModal, onFileIputChamge };
