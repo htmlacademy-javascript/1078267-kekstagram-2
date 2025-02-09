@@ -15,7 +15,7 @@ const hashtagInput = uploadForm.querySelector('.text__hashtags');
 const commentInput = uploadForm.querySelector('.text__description');
 const uploadFormSubmitButton = uploadForm.querySelector('.img-upload__submit');
 const uploadPreview = document.querySelector('.img-upload__preview > img');
-const UploadPreviewEffects = document.querySelector('.effects__preview');
+const uploadPreviewEffects = document.querySelector('.effects__preview');
 
 const templateSuccess = document.querySelector('#success').content;
 const templateError = document.querySelector('#error').content;
@@ -88,7 +88,7 @@ function onFileIputChange() {
   if(matches) {
     const url = URL.createObjectURL(file);
     uploadPreview.src = url;
-    UploadPreviewEffects.forEach((item) => {
+    uploadPreviewEffects.forEach((item) => {
       item.style.backgroundImage = `url(${url})`;
     });
   } else {
