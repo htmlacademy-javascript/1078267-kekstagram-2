@@ -1,4 +1,4 @@
-import { resetScale } from './scale-controle.js';
+import { updateScale } from './scale-controle.js';
 const photoPreview = document.querySelector('.img-upload__preview');
 const imagePreview = photoPreview.querySelector('img');
 
@@ -16,6 +16,17 @@ const sliderConfiguration = {
   step: 0.1,
   start: 1,
   connect: 'lower',
+  format: {
+    to: function (value) {
+      if (Number.isInteger(value)) {
+        return value.toFixed(0);
+      }
+      return value.toFixed(1);
+    },
+    from: function (value) {
+      return parseFloat(value);
+    },
+  },
 };
 
 const getEffectPreviewClass = (value) => `effects__preview--${value}`;
@@ -29,6 +40,7 @@ defaulEffect.apply = () => {
   imagePreview.classList.remove(...classNames);
   const effectNoneRadio = document.getElementById('effect-none');
   effectNoneRadio.checked = true;
+  updateScale();
 };
 
 defaulEffect.updateLevel = () => {};
@@ -48,7 +60,6 @@ const onEffectChange = (evt) => {
     const effectName = evt.target.getAttribute('id').split('-')[1];
     currentEffect = effects[effectName];
     currentEffect.apply();
-    resetScale();
   }
 };
 
@@ -68,7 +79,6 @@ function Effect(name, min, max, step, filter, filterUnit = '') {
 
 Effect.prototype.apply = function () {
   sliderContainer.hidden = false;
-  imagePreview.style = '';
   imagePreview.classList.remove(...classNames);
   imagePreview.classList.add(this.className);
   effectSlider.noUiSlider.updateOptions(this.sliderOptions);

@@ -30,7 +30,7 @@ const onLoadMoreButtonClick = () => {
   });
 
   socialComments.appendChild(socialCommentsFragment);
-  commentsCount.firstChild.textContent = `${renderedCommentsLength} из `;
+  commentsCount.firstChild.textContent = `${renderedCommentsLength}`;
   commentsCount.querySelector('.social__comment-total-count').textContent = comments.length;
   if (renderedCommentsLength >= comments.length) {
     commentsLoader.classList.add('hidden');

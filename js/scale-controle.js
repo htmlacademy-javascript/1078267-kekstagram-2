@@ -36,4 +36,4 @@ const initScaleControle = () => {
 };
 
 
-export {initScaleControle, resetScale};
+export {initScaleControle, resetScale, updateScale};
