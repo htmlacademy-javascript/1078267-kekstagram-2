@@ -1,5 +1,5 @@
 
-import { pictures, renderPreview } from './thumbnails.js';
+import { renderPreview } from './thumbnails.js';
 import { debounce } from './utils.js';
 import { FILTER, SortFunc, MAX_PICTURE_COUNT } from './constants.js';
 
@@ -29,10 +29,6 @@ function onFilterChange(evt) {
   applyFilter();
 }
 
-function clearThumbnails() {
-  pictures.querySelectorAll('a.picture').forEach((item) => item.remove());
-}
-
 function applyFilter() {
   let filteredPictures = [];
 
@@ -46,7 +42,6 @@ function applyFilter() {
     filteredPictures = photos.toSorted(SortFunc.DISCUSSED);
   }
   debounceRender(filteredPictures);
-  clearThumbnails();
 }
 
 function configFilter(picturesData) {
