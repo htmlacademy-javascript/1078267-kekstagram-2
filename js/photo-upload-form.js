@@ -15,7 +15,7 @@ const hashtagInput = uploadForm.querySelector('.text__hashtags');
 const commentInput = uploadForm.querySelector('.text__description');
 const uploadFormSubmitButton = uploadForm.querySelector('.img-upload__submit');
 const uploadPreview = document.querySelector('.img-upload__preview > img');
-const uploadPreviewEffects = document.querySelector('.effects__preview');
+const uploadPreviewEffects = document.querySelectorAll('.effects__preview');
 
 const templateSuccess = document.querySelector('#success').content;
 const templateError = document.querySelector('#error').content;
