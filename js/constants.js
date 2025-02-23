@@ -1,7 +1,7 @@
 const Filter = {
-  default: 'filter-default',
-  random: 'filter-random',
-  discussed: 'filter-discussed',
+  DEFAULT: 'filter-default',
+  RANDOM: 'filter-random',
+  DISCUSSED: 'filter-discussed',
 };
 
 const SortFunc = {

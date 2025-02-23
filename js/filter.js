@@ -32,13 +32,13 @@ function onFilterChange(evt) {
 function applyFilter() {
   let filteredPictures = [];
 
-  if (currentFilter === Filter.default) {
+  if (currentFilter === Filter.DEFAULT) {
     filteredPictures = photos;
   }
-  if (currentFilter === Filter.random) {
+  if (currentFilter === Filter.RANDOM) {
     filteredPictures = photos.toSorted(SortFunc.RANDOM).slice(0, MAX_PICTURE_COUNT);
   }
-  if (currentFilter === Filter.discussed) {
+  if (currentFilter === Filter.DISCUSSED) {
     filteredPictures = photos.toSorted(SortFunc.DISCUSSED);
   }
   debounceRender(filteredPictures);
