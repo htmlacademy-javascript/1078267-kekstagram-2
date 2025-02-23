@@ -1,7 +1,7 @@
 
 import { renderPreview } from './thumbnails.js';
 import { debounce } from './utils.js';
-import { FILTER, SortFunc, MAX_PICTURE_COUNT } from './constants.js';
+import { Filter, SortFunc, MAX_PICTURE_COUNT } from './constants.js';
 
 
 let currentFilter = 'filter-default';
@@ -32,13 +32,13 @@ function onFilterChange(evt) {
 function applyFilter() {
   let filteredPictures = [];
 
-  if (currentFilter === FILTER.default) {
+  if (currentFilter === Filter.default) {
     filteredPictures = photos;
   }
-  if (currentFilter === FILTER.random) {
+  if (currentFilter === Filter.random) {
     filteredPictures = photos.toSorted(SortFunc.RANDOM).slice(0, MAX_PICTURE_COUNT);
   }
-  if (currentFilter === FILTER.discussed) {
+  if (currentFilter === Filter.discussed) {
     filteredPictures = photos.toSorted(SortFunc.DISCUSSED);
   }
   debounceRender(filteredPictures);

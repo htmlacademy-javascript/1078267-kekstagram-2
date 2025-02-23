@@ -5,7 +5,7 @@ import {getData} from './api.js';
 import {showErrorMessage, savePhotos} from './utils.js';
 import {configFilter} from './filter.js';
 
-const bootstrap = async () => {
+const initApplication = async () => {
   try {
     const photos = await getData();
     savePhotos(photos);
@@ -18,4 +18,4 @@ const bootstrap = async () => {
 };
 
 initUploadModal();
-bootstrap();
+initApplication();
