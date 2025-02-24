@@ -5,8 +5,8 @@ const Filter = {
 };
 
 const SortFunc = {
-  RANDOM: () => 0.5 - Math.random(),
-  DISCUSSED: (a, b) => b.comments.length - a.comments.length,
+  GET_RANDOM_PREVIEW: () => 0.5 - Math.random(),
+  GET_DISCUSSED_PREVIEW: (a, b) => b.comments.length - a.comments.length,
 };
 
 const MAX_PICTURE_COUNT = 10;

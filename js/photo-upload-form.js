@@ -5,6 +5,10 @@ import { initEffects, resetEffects } from './effect-slider-editor.js';
 import {sendData} from './api.js';
 import {FILE_TYPES} from './constants.js';
 
+const UploadFormSubmitButtonText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...',
+};
 
 const uploadForm = document.querySelector('.img-upload__form');
 const pageBody = document.querySelector('body');
@@ -19,12 +23,6 @@ const uploadPreviewEffects = document.querySelectorAll('.effects__preview');
 
 const templateSuccess = document.querySelector('#success').content;
 const templateError = document.querySelector('#error').content;
-
-
-const UploadFormSubmitButtonText = {
-  IDLE: 'Сохранить',
-  SENDING: 'Сохраняю...',
-};
 
 const disableButton = (text) => {
   uploadFormSubmitButton.disabled = true;
@@ -116,12 +114,12 @@ const sendFormData = async (formElement) => {
   }
 };
 
-const formSubmitHandler = (evt) => {
+const onFormLoad = (evt) => {
   evt.preventDefault();
   sendFormData(evt.target);
 };
 
-uploadForm.addEventListener('submit', formSubmitHandler);
+uploadForm.addEventListener('submit', onFormLoad);
 
 initScaleControle();
 initEffects();

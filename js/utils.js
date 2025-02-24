@@ -5,14 +5,23 @@ const body = document.body;
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const closeNotification = (evt) => {
+const onNotificationButtonClose = (evt) => {
   evt.stopPropagation();
   const existElement = document.querySelector('.success') || document.querySelector('.error');
   const closeButton = existElement.querySelector('button');
-  if (evt.target === existElement || evt.target === closeButton || isEscapeKey(evt)) {
+  if (evt.target === existElement || evt.target === closeButton) {
     existElement.remove();
-    body.removeEventListener('click', closeNotification);
-    body.removeEventListener('keydown', closeNotification);
+    body.removeEventListener('click', onNotificationButtonClose);
+  }
+};
+
+
+const onNotificationEscapeClose = (evt) => {
+  evt.stopPropagation();
+  const existElement = document.querySelector('.success') || document.querySelector('.error');
+  if (evt.target === existElement || isEscapeKey(evt)) {
+    existElement.remove();
+    body.removeEventListener('keydown', onNotificationEscapeClose);
   }
 };
 
@@ -20,8 +29,8 @@ const appendNotofication = (template, trigger = null) => {
   trigger?.();
   const notificationNode = template.cloneNode(true);
   body.append(notificationNode);
-  body.addEventListener('click', closeNotification);
-  body.addEventListener('keydown', closeNotification);
+  body.addEventListener('click', onNotificationButtonClose);
+  body.addEventListener('keydown', onNotificationEscapeClose);
 };
 
 const showErrorMessage = (message) => {
@@ -43,21 +52,6 @@ const getRandomInteger = (a, b) => {
   const upper = Math.floor(Math.max(a, b));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
-};
-
-const createRandomIdFromRangeGenerator = (min, max) => {
-  const previousValues = [];
-  return function () {
-    let currentValue = getRandomInteger(min, max);
-    if (previousValues.length >= max - min + 1) {
-      return null;
-    }
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomInteger(min, max);
-    }
-    previousValues.push(currentValue);
-    return currentValue;
-  };
 };
 
 const createIdGenerator = () => {
@@ -84,13 +78,6 @@ Range.prototype.decrease = function() {
   this.value = Math.max(this.value - this._step, this._min);
 };
 
-let photos = [];
-const savePhotos = (newPhotos) => {
-  photos = newPhotos;
-};
-
-const getPhotoById = (id) => photos.find((photo) => photo.id === id);
-
 function debounce (callback, timeoutDelay = 500) {
   let timeoutId;
   return (...rest) => {
@@ -101,13 +88,10 @@ function debounce (callback, timeoutDelay = 500) {
 
 export {
   getRandomInteger,
-  createRandomIdFromRangeGenerator,
   createIdGenerator,
   isEscapeKey,
   Range,
   showErrorMessage,
-  savePhotos,
-  getPhotoById,
   appendNotofication,
   debounce,
 };

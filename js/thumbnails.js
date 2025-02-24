@@ -6,9 +6,9 @@ function clearThumbnails() {
   pictures.querySelectorAll('a.picture').forEach((item) => item.remove());
 }
 
-const renderPreview = (photoArray) => {
+const renderPreview = (photoPreviews) => {
   clearThumbnails();
-  photoArray.forEach(({id, url, comments, likes}) => {
+  photoPreviews.forEach(({id, url, comments, likes}) => {
     const picture = pictureTemplate.cloneNode(true);
     picture.dataset.pictureId = id;
     picture.querySelector('.picture__img').src = url;
