@@ -5,23 +5,23 @@ const body = document.body;
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const onNotificationButtonClose = (evt) => {
+const onNotificationButtonClick = (evt) => {
   evt.stopPropagation();
   const existElement = document.querySelector('.success') || document.querySelector('.error');
   const closeButton = existElement.querySelector('button');
   if (evt.target === existElement || evt.target === closeButton) {
     existElement.remove();
-    body.removeEventListener('click', onNotificationButtonClose);
+    body.removeEventListener('click', onNotificationButtonClick);
   }
 };
 
 
-const onNotificationEscapeClose = (evt) => {
+const onNotificationEscapeKeydown = (evt) => {
   evt.stopPropagation();
   const existElement = document.querySelector('.success') || document.querySelector('.error');
   if (evt.target === existElement || isEscapeKey(evt)) {
     existElement.remove();
-    body.removeEventListener('keydown', onNotificationEscapeClose);
+    body.removeEventListener('keydown', onNotificationEscapeKeydown);
   }
 };
 
@@ -29,8 +29,8 @@ const appendNotofication = (template, trigger = null) => {
   trigger?.();
   const notificationNode = template.cloneNode(true);
   body.append(notificationNode);
-  body.addEventListener('click', onNotificationButtonClose);
-  body.addEventListener('keydown', onNotificationEscapeClose);
+  body.addEventListener('click', onNotificationButtonClick);
+  body.addEventListener('keydown', onNotificationEscapeKeydown);
 };
 
 const showErrorMessage = (message) => {
