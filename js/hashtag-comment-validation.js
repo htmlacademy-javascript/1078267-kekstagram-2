@@ -1,17 +1,15 @@
 const MAX_HASHTAGS = 5;
 const MAX_COMMENT_LENGTH = 140;
+const VALID_HASHTAG_REGULAR = /^#[a-za-яё0-9]{1,19}$/i;
 
 const isCommentValid = (value) => {
 
-  if (value.length > MAX_COMMENT_LENGTH) {
-    return false;
+  if (value.length < MAX_COMMENT_LENGTH) {
+    return true;
   }
-  return true;
 };
 
-const validHashtagRegular = /^#[a-za-яё0-9]{1,19}$/i;
-
-const isHashtagValid = (value) => validHashtagRegular.test(value);
+const isHashtagValid = (value) => VALID_HASHTAG_REGULAR.test(value);
 
 const isHashtagsValid = (hashtagArray) => {
   if (hashtagArray.length > MAX_HASHTAGS) {
